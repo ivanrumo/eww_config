@@ -1,0 +1,36 @@
+#!/bin/bash
+
+free() {
+	disk_free=`/usr/bin/df -h $partition_name | grep dev | awk '{print $4}'`
+	echo $disk_free
+}
+used() {
+	disk_used=`/usr/bin/df -h $partition_name | grep dev | awk '{print $3}'`
+	echo $disk_used
+}
+total() {
+	disk_total=`/usr/bin/df -h $partition_name | grep dev | awk '{print $2}'`
+	echo $disk_total
+}
+percent() {
+	percent_used=`/usr/bin/df -h $partition_name | grep dev | awk '{print $5}' | tr -d '%'`
+	echo $percent_used
+}
+
+
+if [[ "$2" == "home" ]]; then
+	partition_name="/home"
+elif [[ "$2" == "root" ]]; then
+	partition_name="/"
+fi
+
+if [[ "$1" == "--free" ]]; then
+	free
+elif [[ "$1" == "--used" ]]; then
+	used
+elif [[ "$1" == "--percent" ]]; then
+	percent
+elif [[ "$1" == "--total" ]]; then
+	total
+fi
+

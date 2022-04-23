@@ -1,0 +1,5 @@
+#!/bin/sh
+
+
+#printf "%.0f\n"
+printf $(free -m | grep Mem | awk '{print ($3/$2)*100}'|cut -d. -f1)
